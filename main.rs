@@ -65,7 +65,9 @@ fn help() {
                         }
                     }
                 }
-                2 => {
+                2 => { loop {
+                    
+                
                     /***
                      * folder <> Pasta
                      * 1 verif Folder
@@ -81,7 +83,11 @@ fn help() {
                         std::thread::sleep(std::time::Duration::from_secs(1));
                         continue;
                     }
-                    let search = input("Search: ");
+                    let mut search = input("Search: ");
+                    if search.len() <= 2{
+                        println!("{}", "Please enter at least 3 characters".bright_red());
+                        continue;
+                    }
                     let walkdir = walkdir::WalkDir::new(folder_.trim());
                     let mut contador = 0 as i64;
                     for u_p in walkdir {
@@ -109,13 +115,24 @@ fn help() {
                                 }
                             }
                         }
+                        
                     }
                     println!(
                         "{}{} ",
                         "Total Results: ".bold().yellow(),
                         contador.to_string().bold().italic().green()
                     );
-                    input("press any key: ");
+                    let value_back = input("Back press 1 Continue Enter:");
+                    if let Ok(value) = value_back.parse::<i32>(){
+                        if value == 1{
+                            break;
+                        }
+                        else{
+                            continue;
+                        }
+                    }
+                    continue;
+                }
                 }
                 3 => {
                     println!("bye..");
